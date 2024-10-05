@@ -33,8 +33,8 @@ public static class DependeceInjection
             opt.UseMySql(fullconectionString, serverVersion);
         });
 
-        services.AddScoped<IAnimeRepository, AnimeRepository>();
-        services.AddScoped<IDirectorRepository, DirectorRepository>();
+        //services.AddScoped<IAnimeRepository, AnimeRepository>();
+        //services.AddScoped<IDirectorRepository, DirectorRepository>();
 
         return services;
     }
