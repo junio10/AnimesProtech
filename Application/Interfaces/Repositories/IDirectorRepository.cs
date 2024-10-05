@@ -4,11 +4,13 @@ namespace Application.Interfaces.Repositories
 {
     public interface IDirectorRepository
     {
-        Task<Director> add(Director director);
-        Task<Director> update(int id);
-        Task<Director> getDirectorByName(string name);
+        Task<Director> Add(Director director);
+        Task<Director> Update(Director director);
+        Task<Director> GetDirectorByName(string name);
 
-        Task<IEnumerable<Director>> getAllDirector();
+        Task<Director> GetDirectorById(int id);
+
+        Task<IEnumerable<Director>> GetAllDirectors();
 
     }
 }
