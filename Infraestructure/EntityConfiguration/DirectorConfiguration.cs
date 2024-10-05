@@ -17,5 +17,13 @@ public class DirectorConfiguration : IEntityTypeConfiguration<Director>
 
         builder.Property(d => d.Name).IsRequired().HasMaxLength(100);
         builder.HasIndex(d => d.Name).IsUnique();
+
+        builder.HasData(
+                new Director { Id = 1, Name = "Mamoru Hosoda" },
+                new Director { Id = 2, Name = "Makoto Shinkai" },
+                new Director { Id = 3, Name = "Hiroshi Kojima" },
+                new Director { Id = 4, Name = "Yoshiyuki Tomino" },
+                new Director { Id = 5, Name = "Hayao Miyazaki" }
+          );
     }
 }
