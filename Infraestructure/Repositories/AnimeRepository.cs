@@ -1,5 +1,9 @@
 ﻿using Application.Interfaces.Repositories;
 using Domain.Entities;
+using Domain.Exceptions;
+using Infraestructure.Context;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,34 +13,73 @@ using System.Threading.Tasks;
 namespace Infraestructure.Repositories;
 
 public class AnimeRepository : IAnimeRepository
+
 {
-    public Task<Anime> add(Anime anime)
+    private readonly ProtechAnimesContext _context;
+
+    public AnimeRepository(ProtechAnimesContext context)
     {
-        throw new NotImplementedException();
+        _context = context;
+    }
+    public async Task<Anime> Add(Anime anime)
+    {
+        var director = await _context.Directors.FirstOrDefaultAsync(d => d.Id == anime.DirectorId);
+        if (anime.DirectorId != director.Id)
+        {
+           throw new NotFoundException("diretor não encontrado");
+
+        }
+       await _context.AddAsync(anime);
+       await _context.SaveChangesAsync();
+       return anime;
+        
     }
 
-    public Task<IEnumerable<Anime>> animesByIdDirector(int id)
+    public async Task<IEnumerable<Anime>> AnimesByIdDirector(int id)
     {
-        throw new NotImplementedException();
+        return await _context.Animes
+         .Where(a => a.DirectorId == id)
+         .ToListAsync();
     }
 
-    public Task<Anime> delete(int id)
+    public async Task<Anime> Delete(int id)
     {
-        throw new NotImplementedException();
+        var anime = await _context.Animes.FindAsync(id) ?? throw new NotFoundException("Anime não existe");
+        _context.Animes.Remove(anime);
+
+        await _context.SaveChangesAsync();
+
+        return anime; 
     }
 
-    public Task<Anime> getAnimeByName(string name)
+    public async Task<Anime> GetAnimeByName(string name)
     {
-        throw new NotImplementedException();
+        return await _context.Animes.
+            Where(a => a.Name == name).
+            FirstOrDefaultAsync();
+
     }
 
-    public Task<IEnumerable<Anime>> getAnimesByKeyWords(string summary)
+    public async Task<IEnumerable<Anime>> GetAnimesByKeyWords(string summary)
     {
-        throw new NotImplementedException();
+        return await _context.Animes.
+            Where(a => EF.Functions.Like(a.Summary, $"%{summary}%"))
+            .ToListAsync();
     }
 
-    public Task<Anime> update(Anime anime)
+    public async Task<Anime> Update(Anime animeUpdate)
     {
-        throw new NotImplementedException();
+        var anime = await _context.Animes.
+            Where(a => a.Id == animeUpdate.Id).FirstOrDefaultAsync();
+        if (anime == null)
+        {
+            throw new NotFoundException("anime não encontrado");
+        }
+        anime.Name = animeUpdate.Name;
+        anime.Summary = animeUpdate.Summary;
+        anime.Director = animeUpdate.Director;
+
+        await _context.SaveChangesAsync();
+        return anime;
     }
 }
