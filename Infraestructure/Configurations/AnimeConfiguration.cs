@@ -15,7 +15,7 @@ public class AnimeConfiguration : IEntityTypeConfiguration<Anime>
 
         builder.Property(a => a.Summary).IsRequired().HasMaxLength(500);
 
-        builder.Property(a => a.DirectorId).IsRequired();
+        builder.Property(a => a.DirectorId);
 
         builder.HasOne(a => a.Director)
             .WithMany(d => d.Animes)
