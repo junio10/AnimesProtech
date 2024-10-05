@@ -4,12 +4,12 @@ namespace Application.Interfaces.Repositories
 {
     public interface IAnimeRepository
     {
-        Task<Anime> add(Anime anime);
-        Task<Anime> update(Anime anime);
-        Task<Anime> delete(int id);
-        Task<Anime> getAnimeByName(string name);
-        Task<IEnumerable<Anime>> getAnimesByKeyWords(string summary);
-        Task<IEnumerable<Anime>> animesByIdDirector(int id);
+        Task<Anime> Add(Anime anime);
+        Task<Anime> Update(Anime anime);
+        Task<Anime> Delete(int id);
+        Task<Anime> GetAnimeByName(string name);
+        Task<IEnumerable<Anime>> GetAnimesByKeyWords(string summary);
+        Task<IEnumerable<Anime>> AnimesByIdDirector(int id);
 
 
 
