@@ -23,6 +23,7 @@ public class DirectorRepository : IDirectorRepository
     public async Task<Director> Add(Director director)
     {
         await _context.Directors.AddAsync(director);
+        await _context.SaveChangesAsync();
         return director;
     }
 
