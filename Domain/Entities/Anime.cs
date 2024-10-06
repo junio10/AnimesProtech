@@ -11,4 +11,6 @@ public class Anime
     public Director Director { get; set; } = null!;
 
     public int DirectorId { get; set; }
+
+   
 }
