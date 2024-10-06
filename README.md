@@ -1,6 +1,6 @@
 # AnimesProtech
 
-## Funcionalidades
+   ## Funcionalidades
   -Cadastro de animes
   -Listagem de animes com filtros de nome, resumo e diretor
   -Atualização de animes
