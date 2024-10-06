@@ -1,6 +1,9 @@
 ﻿namespace API;
 
-public class DependenceInjection
+public static class DependenceInjection
 {
-
+    public static IServiceCollection AddApi(this IServiceCollection services)
+    {
+       return services;
+    }
 }
