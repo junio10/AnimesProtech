@@ -1,5 +1,9 @@
 ﻿using Application.Interfaces.Repositories;
 using Domain.Entities;
+using Domain.Exceptions;
+using Infraestructure.Context;
+using Infraestructure.Options;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,23 +14,51 @@ namespace Infraestructure.Repositories;
 
 public class DirectorRepository : IDirectorRepository
 {
-    public Task<Director> add(Director director)
+    private readonly ProtechAnimesContext _context;
+    
+    public DirectorRepository(ProtechAnimesContext context)
     {
-        throw new NotImplementedException();
+        _context = context;
+    }
+    public async Task<Director> Add(Director director)
+    {
+        await _context.Directors.AddAsync(director);
+        return director;
     }
 
-    public Task<IEnumerable<Director>> getAllDirector()
+    public async Task<IEnumerable<Director>> GetAllDirectors()
     {
-        throw new NotImplementedException();
+        return await _context.Directors.ToListAsync();
     }
 
-    public Task<Director> getDirectorByName(string name)
+    public async Task<Director> GetDirectorById(int id)
     {
-        throw new NotImplementedException();
+        return await _context.Directors.Where(d => d.Id == id)
+            .FirstOrDefaultAsync();
     }
 
-    public Task<Director> update(int id)
+    public async Task<Director> GetDirectorByName(string name)
     {
-        throw new NotImplementedException();
+        return await _context.Directors.Where(d => d.Name == name)
+            .FirstOrDefaultAsync();
+    }
+
+    public async Task<Director> Update(Director directorUpdate)
+    {
+       var director = await _context.Directors.Where(d => d.Id == directorUpdate.Id)
+            .FirstOrDefaultAsync();
+        if (director != null)
+        {
+            throw new NotFoundException("diretor não encontrado");
+        }
+        director.Name = directorUpdate.Name;
+        await _context.SaveChangesAsync();
+        return director;
+
+    }
+
+    public async Task CommitAsync()
+    {
+        await _context.SaveChangesAsync();
     }
 }
