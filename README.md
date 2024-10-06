@@ -1,13 +1,14 @@
 # AnimesProtech
 
-   ## Funcionalidades
-   -Cadastro de animes.
-   -Listagem de animes com filtros de nome, resumo e diretor.
-   -Atualização de animes.
-   -Exclusão de animes.
-   -Cadastro de diretor.
-   -Listagem de animes com filtros de nome, por id.
-   -Atualização de diretor.
+## Funcionalidades
+- Cadastro de animes.
+- Listagem de animes com filtros de nome, resumo e diretor.
+- Atualização de animes.
+- Exclusão de animes.
+- Cadastro de diretor.
+- Listagem de diretores com filtros de nome e por ID.
+- Atualização de diretor.
+
 
 ## Como Executar a Aplicação
 1. Clone o repositório.
