@@ -1,5 +1,5 @@
 # AnimesProtech
-  Projeto de desafio técnico para testar e implementar conceitos de arquitetura limpa em uma API Restfull
+  Projeto de desafio técnico para testar e implementar conceitos de arquitetura limpa em uma API Restfull com a finalidade de gerenciar animes
 ## Funcionalidades
 - Cadastro de animes.
 - Listagem de animes com filtros de nome, resumo e diretor.
