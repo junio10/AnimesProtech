@@ -10,6 +10,9 @@ namespace Application.Interfaces.Repositories
         Task<Anime> GetAnimeByName(string name);
         Task<IEnumerable<Anime>> GetAnimesByKeyWords(string summary);
         Task<IEnumerable<Anime>> AnimesByIdDirector(int id);
+        Task<IEnumerable<Anime>> GetAllAnimes();
+        Task<Anime?> GetAnimeById(int id);
+        Task CommitAsync();
 
 
 
