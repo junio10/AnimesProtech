@@ -24,7 +24,7 @@ public class AnimeRepository : IAnimeRepository
     public async Task<Anime> Add(Anime anime)
     {
         var director = await _context.Directors.FirstOrDefaultAsync(d => d.Id == anime.DirectorId);
-        if (anime.DirectorId != director.Id)
+        if (director is null)
         {
            throw new NotFoundException("diretor não encontrado");
 
@@ -52,7 +52,7 @@ public class AnimeRepository : IAnimeRepository
         return anime; 
     }
 
-    public async Task<Anime> GetAnimeByName(string name)
+    public async Task<Anime?> GetAnimeByName(string name)
     {
         return await _context.Animes.
             Where(a => a.Name == name).
@@ -81,5 +81,21 @@ public class AnimeRepository : IAnimeRepository
 
         await _context.SaveChangesAsync();
         return anime;
+    }
+
+    public async Task<Anime?> GetAnimeById(int id)
+    {
+        return await _context.Animes.Where(a => a.Id == id).
+            FirstOrDefaultAsync();
+    }
+
+    public async Task CommitAsync()
+    {
+        await _context.SaveChangesAsync();
+    }
+
+    public Task<IEnumerable<Anime>> GetAllAnimes()
+    {
+        throw new NotImplementedException();
     }
 }
