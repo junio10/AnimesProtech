@@ -21,13 +21,13 @@ public class DirectorController : Controller
     {
         _mediator = mediator;
     }
-    [HttpGet("index")]
+    [HttpGet("Index")]
     public async Task<IActionResult> Index()
     {
-        var directors = await _mediator.Send(new GetAllDirectorsCommand());
+        var directors = await _mediator.Send(new GetAllDirectorsQuery());
         return directors.Director is null ? NotFound(new { Message = "Não existe diretores." }) : Ok(directors);
     }
-    [HttpPost("create")]
+    [HttpPost("Create")]
     public async Task<IActionResult> Create([FromBody] CreateDirectorCommand request)
     {
         var director = await _mediator.Send(request);
@@ -38,8 +38,8 @@ public class DirectorController : Controller
         return Ok(director);
     }
 
-    [HttpGet("getByName")]
-    public async Task<IActionResult> GetDirectorByName([FromQuery] GetDirectorByNameCommand request)
+    [HttpGet("GetByName")]
+    public async Task<IActionResult> GetDirectorByName([FromQuery] GetDirectorByNameQuery request)
     {
         
         var director = await _mediator.Send(request);
@@ -55,8 +55,8 @@ public class DirectorController : Controller
         return Ok(director);
     }
 
-    [HttpGet("getById")]
-    public async Task<IActionResult> GetDirectorById([FromQuery] GetDirectorByIdCommand request)
+    [HttpGet("GetById")]
+    public async Task<IActionResult> GetDirectorById([FromQuery] GetDirectorByIdQuery request)
     {
 
         var director = await _mediator.Send(request);
@@ -68,6 +68,18 @@ public class DirectorController : Controller
             return NotFound(new { Message = "Diretor não encontrado." });
         }
 
+
+        return Ok(director);
+    }
+    [HttpPut("Update")]
+    public async Task<IActionResult> Update([FromBody] UpdateDirectorCommand request)
+    {
+        var director = await _mediator.Send(request);
+
+        if (director.Director is null)
+        {
+            return BadRequest(new { Message = "Não foi possível atualizar o diretor" });
+        }
 
         return Ok(director);
     }
