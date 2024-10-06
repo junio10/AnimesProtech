@@ -21,7 +21,7 @@ public class AnimeRepository : IAnimeRepository
     {
         _context = context;
     }
-    public async Task<Anime> Add(Anime anime)
+    public async Task<Anime?> Add(Anime anime)
     {
         var director = await _context.Directors.FirstOrDefaultAsync(d => d.Id == anime.DirectorId);
         if (director is null)
@@ -29,22 +29,26 @@ public class AnimeRepository : IAnimeRepository
            throw new NotFoundException("diretor não encontrado");
 
         }
+       anime.Director = director;
        await _context.AddAsync(anime);
        await _context.SaveChangesAsync();
        return anime;
         
     }
 
-    public async Task<IEnumerable<Anime>> AnimesByIdDirector(int id)
+    public async Task<IEnumerable<Anime?>> AnimesByIdDirector(int id)
     {
         return await _context.Animes
          .Where(a => a.DirectorId == id)
          .ToListAsync();
     }
 
-    public async Task<Anime> Delete(int id)
+    public async Task<Anime?> Delete(int id)
     {
-        var anime = await _context.Animes.FindAsync(id) ?? throw new NotFoundException("Anime não existe");
+        var anime = await _context.Animes.FindAsync(id);
+        if(anime is null) {
+            throw new NotFoundException("Não existe o anime informado");
+        }
         _context.Animes.Remove(anime);
 
         await _context.SaveChangesAsync();
@@ -60,18 +64,18 @@ public class AnimeRepository : IAnimeRepository
 
     }
 
-    public async Task<IEnumerable<Anime>> GetAnimesByKeyWords(string summary)
+    public async Task<IEnumerable<Anime?>> GetAnimesByKeyWords(string summary)
     {
         return await _context.Animes.
             Where(a => EF.Functions.Like(a.Summary, $"%{summary}%"))
             .ToListAsync();
     }
 
-    public async Task<Anime> Update(Anime animeUpdate)
+    public async Task<Anime?> Update(Anime animeUpdate)
     {
         var anime = await _context.Animes.
             Where(a => a.Id == animeUpdate.Id).FirstOrDefaultAsync();
-        if (anime == null)
+        if (anime is null)
         {
             throw new NotFoundException("anime não encontrado");
         }
@@ -94,8 +98,8 @@ public class AnimeRepository : IAnimeRepository
         await _context.SaveChangesAsync();
     }
 
-    public Task<IEnumerable<Anime>> GetAllAnimes()
+    public async Task<IEnumerable<Anime>> GetAllAnimes()
     {
-        throw new NotImplementedException();
+        return await _context.Animes.ToListAsync();
     }
 }

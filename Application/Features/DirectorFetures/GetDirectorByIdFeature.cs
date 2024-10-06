@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace Application.Features.DirectorFetures;
 
-public record GetDirectorByIdCommand(
+public record GetDirectorByIdQuery(
     int id
     ) : IRequest<GetDirectorByIdResponse>;
 
 public record GetDirectorByIdResponse(Director Director);
 
-public class GetDirectorByIdHandler : IRequestHandler<GetDirectorByIdCommand, GetDirectorByIdResponse>
+public class GetDirectorByIdHandler : IRequestHandler<GetDirectorByIdQuery, GetDirectorByIdResponse>
 {
     private readonly IDirectorRepository _directorRepository;
     public GetDirectorByIdHandler(IDirectorRepository directorRepository)
@@ -23,7 +23,7 @@ public class GetDirectorByIdHandler : IRequestHandler<GetDirectorByIdCommand, Ge
         _directorRepository = directorRepository;
     }
 
-    public async Task<GetDirectorByIdResponse> Handle(GetDirectorByIdCommand request, CancellationToken cancellationToken)
+    public async Task<GetDirectorByIdResponse> Handle(GetDirectorByIdQuery request, CancellationToken cancellationToken)
     {
 
         var newAnime = await _directorRepository.GetDirectorById(request.id);

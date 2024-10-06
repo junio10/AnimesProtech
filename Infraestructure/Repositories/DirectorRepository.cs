@@ -27,18 +27,18 @@ public class DirectorRepository : IDirectorRepository
         return director;
     }
 
-    public async Task<IEnumerable<Director>> GetAllDirectors()
+    public async Task<IEnumerable<Director?>> GetAllDirectors()
     {
         return await _context.Directors.ToListAsync();
     }
-
-    public async Task<Director> GetDirectorById(int id)
+    
+    public async Task<Director?> GetDirectorById(int id)
     {
         return await _context.Directors.Where(d => d.Id == id)
             .FirstOrDefaultAsync();
     }
 
-    public async Task<Director> GetDirectorByName(string name)
+    public async Task<Director?> GetDirectorByName(string name)
     {
         return await _context.Directors.Where(d => d.Name == name)
             .FirstOrDefaultAsync();
@@ -48,7 +48,7 @@ public class DirectorRepository : IDirectorRepository
     {
        var director = await _context.Directors.Where(d => d.Id == directorUpdate.Id)
             .FirstOrDefaultAsync();
-        if (director != null)
+        if (director is null)
         {
             throw new NotFoundException("diretor não encontrado");
         }

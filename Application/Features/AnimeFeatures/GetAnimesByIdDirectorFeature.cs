@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace Application.Features.AnimeFeature;
 
-public record GetAnimesByIdDirectorCommand(
+public record GetAnimesByIdDirectorQuery(
     int idDiretor
     ) : IRequest<GetAnimesByIdDirectorResponse>;
 
 public record GetAnimesByIdDirectorResponse(IEnumerable<Anime> Animes);
 
-public class GetAnimesByIdDirectorHandler : IRequestHandler<GetAnimesByIdDirectorCommand, GetAnimesByIdDirectorResponse>
+public class GetAnimesByIdDirectorHandler : IRequestHandler<GetAnimesByIdDirectorQuery, GetAnimesByIdDirectorResponse>
 {
     private readonly IAnimeRepository _animeRepository;
     public GetAnimesByIdDirectorHandler(IAnimeRepository animeRepository)
@@ -23,7 +23,7 @@ public class GetAnimesByIdDirectorHandler : IRequestHandler<GetAnimesByIdDirecto
         _animeRepository = animeRepository;
     }
 
-    public async Task<GetAnimesByIdDirectorResponse> Handle(GetAnimesByIdDirectorCommand request, CancellationToken cancellationToken)
+    public async Task<GetAnimesByIdDirectorResponse> Handle(GetAnimesByIdDirectorQuery request, CancellationToken cancellationToken)
     {
         var newAnime = await _animeRepository.AnimesByIdDirector(request.idDiretor);
         return new GetAnimesByIdDirectorResponse(newAnime);

@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace Application.Features.DirectorFetures;
 
-public record GetDirectorByNameCommand(
+public record GetDirectorByNameQuery(
     string name
     ) : IRequest<GetDirectorByNameResponse>;
 
 public record GetDirectorByNameResponse(Director Director);
 
-public class GetDirectorByNameHandler : IRequestHandler<GetDirectorByNameCommand, GetDirectorByNameResponse>
+public class GetDirectorByNameHandler : IRequestHandler<GetDirectorByNameQuery, GetDirectorByNameResponse>
 {
     private readonly IDirectorRepository _directorRepository;
     public GetDirectorByNameHandler(IDirectorRepository directorRepository)
@@ -23,7 +23,7 @@ public class GetDirectorByNameHandler : IRequestHandler<GetDirectorByNameCommand
         _directorRepository = directorRepository;
     }
 
-    public async Task<GetDirectorByNameResponse> Handle(GetDirectorByNameCommand request, CancellationToken cancellationToken)
+    public async Task<GetDirectorByNameResponse> Handle(GetDirectorByNameQuery request, CancellationToken cancellationToken)
     {
 
         var director = await _directorRepository.GetDirectorByName(request.name);

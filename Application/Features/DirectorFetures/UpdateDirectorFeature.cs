@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 namespace Application.Features.DirectorFetures;
 
 public record UpdateDirectorCommand(
+    int id,
     string name
     ) : IRequest<UpdateDirectorResponse>;
 
@@ -25,7 +26,7 @@ public class UpdateDirectorHandler : IRequestHandler<UpdateDirectorCommand, Upda
 
     public async Task<UpdateDirectorResponse> Handle(UpdateDirectorCommand request, CancellationToken cancellationToken)
     {
-        Director director = new Director { Name = request.name };
+        Director director = new Director { Id = request.id,Name = request.name };
         var newAnime = await _directorRepository.Update(director);
         return new UpdateDirectorResponse(newAnime);
     }
