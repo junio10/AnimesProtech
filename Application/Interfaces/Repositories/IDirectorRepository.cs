@@ -12,5 +12,7 @@ namespace Application.Interfaces.Repositories
 
         Task<IEnumerable<Director>> GetAllDirectors();
 
+        Task CommitAsync();
+
     }
 }
