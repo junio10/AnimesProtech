@@ -1,6 +1,15 @@
 ﻿
+using Microsoft.Extensions.DependencyInjection;
+
 namespace Application;
 
-internal class DependenceInjection
+public static class DependenceInjection
 {
+    public static IServiceCollection AddApplication(this IServiceCollection services)
+    {
+        var assembly = typeof(DependenceInjection).Assembly;
+        services.AddMediatR(o => o.RegisterServicesFromAssemblies(assembly));
+
+        return services;
+    }
 }
