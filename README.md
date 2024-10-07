@@ -12,12 +12,13 @@
 
 ## Como Executar a Aplicação
 1. **Clone o repositório.**
-2. **Abra o terminal na pasta do projeto.**
-3. **Execute o comando cd Infraestructure**
-4. **Execute o comando dotnet ef database update -c ProtechAnimesContext para criar o banco de dados**
-5. **Execute o comando cd ..**
-6. **Execute o comando dotnet run --project API**
-7. **Acesse http://localhost:5216/swagger/index.html** 
+2. **Criar variável de ambiente AnimesProtechUser e AnimesProtechPassword com o usuário e senha criado para acessar o banco.**
+3. **Abra o terminal na pasta do projeto.**
+4. **Execute o comando cd Infraestructure**
+5. **Execute o comando dotnet ef database update -c ProtechAnimesContext para criar o banco de dados**
+6. **Execute o comando cd ..**
+7. **Execute o comando dotnet run --project API**
+8. **Acesse http://localhost:5216/swagger/index.html** 
 
 ## Tecnologias Utilizadas
 - **ASP.NET Core**: Framework para construção de aplicações web.
