@@ -80,10 +80,7 @@ public class AnimesController : ControllerBase
     [HttpPut("Delete")]
     public async Task<IActionResult> Delete([FromBody] DeleteAnimeCommand request)
     {
-        /*var anime = await _mediator.Send(request);
-        return anime.anime is null ?
-        NotFound(new { Message = "Anime não encontrado" }) :
-        Ok(anime);*/
+       
         try
         {
             var deletedAnime = await _mediator.Send(request);
